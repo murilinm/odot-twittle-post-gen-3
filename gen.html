@@ -1,0 +1,208 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<title>Editable Post Mockup</title>
+
+<style>
+    body {
+        margin: 0;
+        padding: 20px;
+        background-color: #000;
+        font-family: Arial, Helvetica, sans-serif;
+        display: flex;
+        justify-content: center;
+    }
+
+    .container {
+        width: 900px;
+    }
+
+    /* Controls */
+    .controls {
+        background: #111;
+        padding: 16px;
+        border-radius: 12px;
+        margin-bottom: 16px;
+        color: #fff;
+        font-size: 14px;
+    }
+
+    .controls input {
+        width: 100%;
+        padding: 8px;
+        margin-top: 6px;
+        margin-bottom: 12px;
+        border-radius: 6px;
+        border: none;
+    }
+
+    .controls button {
+        padding: 8px 14px;
+        border: none;
+        border-radius: 6px;
+        cursor: pointer;
+        background: #1d9bf0;
+        color: white;
+        font-weight: bold;
+    }
+
+    /* Post */
+    .post {
+        background: linear-gradient(135deg, #0f1419, #0a0d11);
+        color: #ffffff;
+        padding: 24px;
+        border-radius: 16px;
+    }
+
+    .header {
+        display: flex;
+        gap: 16px;
+        align-items: center;
+    }
+
+    .avatar {
+        width: 56px;
+        height: 56px;
+        border-radius: 50%;
+        overflow: hidden;
+        background: #333;
+        flex-shrink: 0;
+    }
+
+    .avatar img {
+        width: 100%;
+        height: 100%;
+        object-fit: cover;
+    }
+
+    .username {
+        font-size: 22px;
+        font-weight: bold;
+    }
+
+    .handle {
+        font-size: 16px;
+        color: #8b98a5;
+    }
+
+    .verified {
+        background: #1d9bf0;
+        color: #fff;
+        border-radius: 50%;
+        padding: 2px 6px;
+        font-size: 14px;
+        margin-left: 6px;
+    }
+
+    .content {
+        margin-top: 20px;
+        font-size: 26px;
+        line-height: 1.35;
+        outline: none;
+    }
+
+    .content[contenteditable="true"]:focus {
+        border-left: 3px solid #1d9bf0;
+        padding-left: 10px;
+    }
+
+    .post-image {
+        margin-top: 20px;
+        border-radius: 16px;
+        overflow: hidden;
+        background: #111;
+    }
+
+    .post-image img {
+        width: 100%;
+        display: block;
+    }
+
+    .hidden {
+        display: none;
+    }
+
+    .timestamp {
+        margin-top: 16px;
+        font-size: 16px;
+        color: #8b98a5;
+    }
+</style>
+</head>
+
+<body>
+
+<div class="container">
+
+    <!-- CONTROLS -->
+    <div class="controls">
+        <label>Post Image URL</label>
+        <input type="text" id="imageInput" placeholder="https://example.com/image.png">
+
+        <button onclick="updateImage()">Update Image</button>
+        <button onclick="toggleImage()">Toggle Post Image</button>
+    </div>
+
+    <!-- POST -->
+    <div class="post">
+
+        <div class="header">
+            <div class="avatar">
+                <!-- LOCKED PROFILE PICTURE -->
+                <img src="https://media.discordapp.net/attachments/1285687378660425748/1330692101276696718/odot.png?ex=69760958&is=6974b7d8&hm=ec7ed6b59e5bc152b480bab98f75218e3034679ec0a038c86226ea0d169baedd&=&format=webp&quality=lossless">
+            </div>
+
+            <div>
+                <div class="username">
+                    OCEANPOINT DOT <span class="verified">✔</span>
+                </div>
+                <div class="handle">@odot</div>
+            </div>
+        </div>
+
+        <!-- EDITABLE TEXT -->
+        <div class="content" contenteditable="true">
+            Click here to edit the post text.
+        </div>
+
+        <!-- POST IMAGE -->
+        <div class="post-image" id="postImage">
+            <img id="postImg" src="https://via.placeholder.com/900x500">
+        </div>
+
+        <div class="timestamp" id="timestamp"></div>
+    </div>
+
+</div>
+
+<script>
+    // Timestamp
+    const now = new Date();
+    const time = now.toLocaleTimeString('en-US', {
+        timeZone: 'America/Chicago',
+        hour: 'numeric',
+        minute: '2-digit'
+    });
+    const date = now.toLocaleDateString('en-US', {
+        month: 'short',
+        day: 'numeric',
+        year: 'numeric'
+    });
+    document.getElementById('timestamp').textContent =
+        `${time} CST · ${date}`;
+
+    // Update post image from link
+    function updateImage() {
+        const imgURL = document.getElementById('imageInput').value;
+        if (imgURL) document.getElementById('postImg').src = imgURL;
+    }
+
+    // Toggle post image
+    function toggleImage() {
+        document.getElementById('postImage').classList.toggle('hidden');
+    }
+</script>
+
+</body>
+</html>
